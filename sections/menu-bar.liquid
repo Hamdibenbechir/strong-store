@@ -1,0 +1,313 @@
+<div class="menu">
+  {% render 'header' %}
+  <div class="menu-content">
+    <div class="my-pro">
+      <a class="a1" href="/products/caramelized-biscuits">CARAMELIZED BISCUITS  <span> WHEY PROTEIN</span></a>
+      <a class="a2" href="/products/strawberry-tart">STRAWBERRY TART <span> WHEY PROTEIN</span></a>
+      <a class="a3"href="/products/evolve®-whey-ice-cream-cookie">CREAM COOKIE <span>WHEY PROTEIN</span></a>
+      <a class="a4"href="{{ routes.all_products_collection_url }}">ALL PRODUCTS</a>
+    </div>
+    <div class="for-link">
+      {% for link in linklists.footer.links %}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+
+        
+      {% endfor %}
+      <div class="icons-footer icon-menu">
+          {% render "media-facebook" %}
+          {% render "media-instagram" %}
+          {% render "media-pentrast" %}
+        </div>
+    </div>
+  </div>
+  <div class="break hello">
+    <div class="wrapper">
+      <h1 class="iteme item1">
+        LOW CARBS *
+      </h1>
+
+      <h1 class="iteme item2">
+        LOW SUGAR *
+      </h1>
+
+      <h1 class="iteme item3">
+        HIGH PROTEIN *
+      </h1>
+
+      <h1 class="iteme item4">
+        LOW SUGAR *
+      </h1>
+
+      <h1 class="iteme item5">
+        LOW CARBS *
+      </h1>
+
+      <h1 class="iteme item6">
+        LOW SUGAR *
+      </h1>
+
+      <h1 class="iteme item7">
+        HIGH PROTEIN *
+      </h1>
+
+      <h1 class="iteme item8">
+        LOW CARBS *
+      </h1>
+
+    
+    
+    </div>
+
+
+
+  </div>
+
+</div>
+
+
+
+
+
+
+<style>
+/* Full-screen menu */
+
+
+.hello{
+  z-index: 18300; 
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color:#eee6e6 ;
+  
+}
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; /* Full viewport height */
+  height: 100vh;
+  background-color: #D4A8FF;
+  z-index: 18000; /* Above all other elements */
+  display: none; /* Initially hidden */
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.5s;
+  
+}
+
+/* When the menu is visible */
+.menu.block {
+  display: block; /* Ensure the element is visible */
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Add some padding or styling to the menu content */
+.menu-content {
+  padding: 20px;
+}
+
+/* Hide the scroll behind the menu */
+body.menu-open {
+  overflow: hidden;
+}
+.menu-content{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 80%;
+  
+}
+.my-pro{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 999999;
+}
+.my-pro a{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  text-decoration: none;
+  
+  font-size: 30px;
+  
+  width: 350px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 10px;
+}
+.for-link{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 999999;
+}
+.for-link a{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-decoration: none;
+  color: #eee6e6;
+  width: 350px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #FF4C01;
+  font-size: 30px;
+  border-radius: 10px;
+  
+}
+.a1{
+  color: #f90;
+  background-color: #eee6e6;
+}
+.a2{
+  color: #E53935;
+  background-color: #eee6e6;
+}
+.a3{
+  color: #2298c9;
+  background-color: #eee6e6;
+}
+.a4{
+  color: #FF4C01;
+  background-color: #eee6e6;
+}
+.icon-menu{
+  color: #FF4C01;
+}
+
+@media screen and (max-width: 850px) {
+  .for-link a{
+
+  width: 250px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  
+  font-size: 25px;
+  
+  
+}
+.my-pro a{
+
+  
+  font-size: 25px;
+  
+  width: 250px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  
+}
+
+
+}
+@media screen and (max-width: 600px) {
+  .for-link a{
+
+  width: 200px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  
+  font-size: 20px;
+  
+  
+}
+.my-pro a{
+
+  
+  font-size: 20px;
+  
+  width: 200px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  
+}
+
+
+}
+
+@media screen and (max-width: 500px) {
+  .for-link a{
+
+  width: 150px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  
+  font-size: 15px;
+  
+  
+}
+.my-pro a{
+
+  
+  font-size: 15px;
+  
+  width: 150px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  
+}
+
+
+}
+@media screen and (max-width: 400px) {
+
+.menu-content{
+  
+height: 65%;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  
+}
+.for-link{
+  gap: 5px;
+}
+.my-pro{
+  gap: 10px;
+}
+  .for-link a{
+     background-color: transparent;
+  width: default;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  color: black;
+  font-size: 15px;
+  
+  
+}
+.my-pro a{
+
+  
+  font-size: 20px;
+  
+  width: 350px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  
+}
+.icon-menu{
+  gap: 5px;
+}
+.icon-menu svg{
+  width: 20px;
+  
+  
+  
+}
+
+
+}
+
+</style>

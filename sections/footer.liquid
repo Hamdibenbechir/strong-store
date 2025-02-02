@@ -1,0 +1,68 @@
+<div class="footer">
+  
+
+    <div class="wrapper">
+        <h1 class="item item1">
+          LOW CARBS *
+        </h1>
+
+        <h1 class="item item2">
+          LOW SUGAR *
+        </h1>
+
+        <h1 class="item item3">
+          HIGH PROTEIN *
+        </h1>
+
+        <h1 class="item item4">
+          LOW SUGAR *
+        </h1>
+
+        <h1 class="item item5">
+          LOW CARBS *
+        </h1>
+
+        <h1 class="item item6">
+          LOW SUGAR *
+        </h1>
+
+        <h1 class="item item7">
+          HIGH PROTEIN *
+        </h1>
+
+        <h1 class="item item8">
+          LOW CARBS *
+        </h1>
+
+      
+      
+    </div>
+
+   <div class="footer-wrap">
+
+      <div class="email">
+        <h1>SUBSCRIBE TO OUR EMAILS</h1>
+        <input type="email" placeholder="Your Email Address">
+        <button>SUBMIT</button>
+        {% for link in linklists.footer.links %}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+      </div>
+
+
+      <div class="media">
+        <h1>STRONG</h1> 
+        <div class="icons-footer">
+          {% render "media-facebook" %}
+          {% render "media-instagram" %}
+          {% render "media-pentrast" %}
+        </div>
+      </div>
+  </div>
+
+  <div class="creatour">
+    <p>Design & website by Hamdi Ben Bechir. Words by Hamdi Ben Bechir</p>
+    <p>A brand by supplement Inc. Copyright Stronge 2025</p>
+  </div>
+
+</div>

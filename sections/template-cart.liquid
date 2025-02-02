@@ -1,0 +1,234 @@
+<form action="{{ routes.cart_url }}" method="post">
+
+      <div style="background-color: #fff6e7;">
+          {% render "header" %}
+        </div>
+
+
+        <div class="cart-page">
+              <h1 class="cart-title">YOUR CART</h1>
+            {% if cart.empty? %}
+              <div class="empty">
+                <h1>YOUR CART IS EMPTY</h1>
+                <a href="{{ routes.all_products_collection_url }}">GO SHOPING</a>
+              </div>
+              
+                {% else %}
+                  <div class="mycart">
+                    {% render "product-cart" %}
+                  </div>
+                  
+                <div class="totol">
+
+                <h1>Subtotal : <span data-total="{{ cart.items_subtotal_price |  money }}" class="sub-total">{{ cart.total_price | money }}</span></h1>
+
+                <input type="submit" name="checkout" value="CHECK OUT">
+
+                </div>
+            {% endif %}
+
+        </div>
+
+  </form>
+  <script>
+    function formatPrice(priceInCents) {
+    const priceInDollars = priceInCents / 100;
+    return `$${priceInDollars.toFixed(2)}`;
+}
+
+function Subtotal(subtotalInCents) {
+    const formattedSubtotal = formatPrice(subtotalInCents);
+    const subtotalElement = document.querySelector(".sub-total");
+    if (subtotalElement) {
+        subtotalElement.textContent = formattedSubtotal;
+    }
+          }
+  
+
+
+  </script>
+<style>
+
+  .totol{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+  .totol h1{
+    font-size: 50px;
+    color: #fff;
+    background-color: #FF4C01;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+    border-radius: 10px;
+  }
+  .totol input{
+    border: 3px solid #fff;
+    background-color: #FF4C01;
+    padding: 30px 200px;
+    font-size: 35px;
+    color: #eee6e6;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  .cart-page{
+    background-color: #fff6e7;
+    display: flex;
+    justify-content: center;
+     align-items: center;
+    width: 100%;
+    flex-direction: column;
+    
+    
+  }
+
+  .cart-title{
+    color: #FF4C01;
+    font-size: 70px;
+    margin-top: 50px;
+  }
+
+  .empty{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 50px;
+  }
+  .empty h1{
+    color: #FF4C01;
+    font-size: 50px;
+
+  }
+  .empty a{
+    text-decoration: none;
+    background-color: #FF4C01;
+    color: #eee6e6;
+    padding: 15px 20px;
+    font-size: 30px;
+    border-radius: 10px;
+  }
+
+
+
+  @media  (max-width: 400px) {
+
+  .empty h1{
+    font-size: 30px;
+  }
+
+  .empty a{
+    font-size: 20px;
+  }
+    .cart-title{
+      font-size: 50px;
+    }
+  }
+
+
+  .mycart{
+    width: 100%;
+    gap: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+
+
+  @media screen and (max-width:1000px){
+    .totol{
+      flex-wrap: wrap;
+      gap: 20px;
+  }
+  .totol h1{
+    font-size: 50px;
+    color: #fff;
+    background-color: #FF4C01;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 400px;
+    border-radius: 10px;
+  }
+  .totol input{
+    border: 3px solid #fff;
+    background-color: #FF4C01;
+    padding: 30px 200px;
+    font-size: 35px;
+    color: #eee6e6;
+    cursor: pointer;
+    border-radius: 10px;
+  }
+  }
+  @media screen and (max-width:600px){
+    .totol{
+      flex-wrap: wrap;
+      gap: 20px;
+  }
+  .totol h1{
+    font-size: 30px;
+
+    height: 80px;
+    display: flex;
+  
+    width: 400px;
+  
+  }
+  .totol input{
+    
+    padding: 20px 150px;
+    font-size: 30px;
+    
+  }
+
+  .mycart{
+  
+    justify-content: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  
+  }
+
+
+  }
+
+  @media screen and (max-width:450px){
+    .totol{
+      flex-wrap: wrap;
+      gap: 20px;
+  }
+  .totol h1{
+    font-size: 25px;
+
+    height: 70px;
+    display: flex;
+  
+    width: 300px;
+  
+  }
+  .totol input{
+    
+    padding: 20px 100px;
+    font-size: 30px;
+    
+  }
+  }
+</style>
+
+

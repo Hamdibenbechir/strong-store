@@ -1,0 +1,143 @@
+<div class="cont">
+  <h1>FAQ'S</h1>
+  <div class="faq-container">
+    <div class="faq">
+        <div class="faq-question" onclick="toggleAnswer(this)">
+          What is HTML?
+          <span>
+          {% render 'arrow-icon' %}
+          </span>
+          </div>
+      
+        <div class="faq-answer">
+          HTML stands for HyperText Markup Language and is used to structure web pages.
+        
+          </div>
+    </div>
+    <div class="faq">
+        <div class="faq-question" onclick="toggleAnswer(this)">What is CSS?
+          <span>
+            {% render 'arrow-icon' %}
+          </span>
+        </div>
+        <div class="faq-answer">CSS stands for Cascading Style Sheets and is used to style web pages.</div>
+    </div>
+    <div class="faq">
+        <div class="faq-question" onclick="toggleAnswer(this)">What is JavaScript?
+          <span >
+            {% render 'arrow-icon' %}
+          </span>
+        </div>
+        <div class="faq-answer">JavaScript is a programming language that makes web pages interactive.</div>
+    </div>
+  </div>
+</div>  
+
+<style>
+  .faqs{
+    background-color: #fff6e7;
+    width: 100%;
+    height: 700px;
+  }
+  .cont{
+    width: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+  
+  background-color: #fff6e7;
+     
+  }
+  .cont h1{
+    color: #FF4C01;
+    font-size: 70px;
+  }
+   .faq-container {
+            width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            border: 1px solid red;
+          
+            
+        }
+        .faq {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+            
+        }
+        .faq:last-child {
+            border-bottom: none;
+        }
+        .faq-question {
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 35px;
+            color: #FF4C01;
+
+        }
+        .faq-answer {
+            display: none;
+            padding-top: 5px;
+            font-size: 30px;
+
+        }
+
+        
+        @media  (max-width:800px) {
+          .faq-container {
+            width: 500px;
+          
+            
+        }
+
+}
+@media  (max-width:500px) {
+          .faq-container {
+            width: 400px;
+          
+            
+        }
+  
+
+}
+
+
+        @media  (max-width:400px) {
+
+        .cont h1{
+    color: #FF4C01;
+    font-size: 50px;
+  }
+          .faq-container {
+            width: 300px;
+          
+            
+        }
+          .faq-question {
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 25px;
+            color: #FF4C01;
+
+        }
+        .faq-answer {
+            display: none;
+            padding-top: 5px;
+            font-size: 20px;
+
+        }
+
+}
+</style>
+
+<script>
+   function toggleAnswer(element) {
+            const answer = element.nextElementSibling;
+            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+        }
+</script>

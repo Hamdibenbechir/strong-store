@@ -1,0 +1,50 @@
+
+ {% if template.name == "collection" or template.name == "cart" or template.name == "page" %}
+    {% assign headerColor = "#FF4C01" %}
+    {% else %}
+    {% assign headerColor = "#eee6e6" %}
+    
+{% endif %} 
+
+
+<div class="header">
+  <a  style="color: {{ headerColor }} !important;" class="menu-btn" >MENU</a>
+  <a style="color: {{ headerColor }} !important;" class="logo" href="{{ routes.root_url }}"><h1 style="color: {{ headerColor }} !important;">STRONG</h1></a>
+  <a style="color: {{ headerColor }} !important;" href="/cart">CART <span class="count" style="color: {{ headerColor }} !important; border: 3px solid {{ headerColor }};">0</span></a>
+</div>
+
+
+  
+
+<script>
+
+function updateCounter() {
+  
+
+  fetch("/cart.json").then( (res) => {
+    return res.json()
+  } ).then((cart) => {document.querySelectorAll(".count").forEach( (el) => {el.textContent = cart.item_count; })})
+}
+updateCounter()
+
+
+
+
+document.addEventListener("scroll", (e) => {
+  const header = document.querySelectorAll(".header")
+  header.forEach(el => {
+    if (window.scrollY > 0) {
+      el.classList.add("scroll")
+    }else{
+      el.classList.remove("scroll")
+    }
+
+  
+});
+
+})
+
+
+
+
+</script>

@@ -1,0 +1,220 @@
+
+{% if product.title == "CREAM COOKIE PROTEIN" %}
+  {% assign bgColor = "#2298c9" %}
+  {% assign myImg =   "orio-info.png"  %}
+  {% assign Img =   "orio.png"  %}
+  {% elsif product.title == "CHOCOLATE SPREAD"  %}
+    {% assign bgColor = "#e0ca1d" %}
+    {% assign myImg =   "chocolate-info.png"  %}
+    {% assign Img =   "choco.png"  %}
+  {% elsif product.title == "STRAWBERRY TART"  %}
+      {% assign bgColor = "#c60035" %} 
+      {% assign myImg =   "straw-info.png"  %}
+      {% assign Img =   "straw.png"  %} 
+  {% elsif product.title == "CARAMELIZED BISCUITS"  %}
+        {% assign bgColor = "#e88104" %}  
+        {% assign myImg =   "cara-info.png"  %}
+      {% assign Img =   "caramel.png"  %} 
+  {% elsif product.title == "DATES & MILK"  %}
+          {% assign bgColor = "#8121d8" %} 
+          {% assign myImg =   "dates-info.png"  %}
+      {% assign Img =   "dates.png"  %} 
+  {% elsif product.title == "WHEY - SOBIA"  %}
+            {% assign bgColor = "#3ba9b2" %}  
+            {% assign myImg =   "sobia-info.png"  %}
+            {% assign Img =   "sobia.png"  %}         
+{% endif %}
+
+
+  
+
+
+<div style="background-color:{{ bgColor }};" class="product-page">
+  {% render "header" %}
+  <div class="contenar-pro">
+
+  {% form 'product', product %}
+    <div class="product-info">
+
+
+      <h1 class="product-name">{{ product.title }}</h1>
+
+    <div class="other-info">
+      <p>{{ product.vendor }}</p>
+      <h1 id="product-price">{{ product.first_available_variant.price | money }}</h1>
+    </div>
+    <div class="product-description">
+      <p>{{ product.description }}</p>
+    </div>
+      <div class="variant">
+           {% for option in product.options_with_values %}
+              <h1>{{ option.name }} :</h1>
+           {% endfor %}
+
+           <div class="variant-title">
+            {% for variant in product.variants %}
+              
+                <a class="va" href=""
+                {% if variant == product.selected_or_first_available_variant %}
+                  selected
+                {% endif %}
+                data-price="{{ variant.price | money }}"
+                data-id="{{ variant.id }}"
+                >
+                  {{ variant.title }}</a>
+              
+            {% endfor %}
+         </div>
+
+      </div>
+      <div class="quantity">
+        <a class="add" href="">+</a>
+        <input class="quantity-input" type="number" value="1" min="1">
+        <a class="remove" class="m1" href="">-</a>
+      </div>
+        
+      <div class="check-out">
+        <button class="check-out-btn" type="submit" {% if product.selected_or_first_available_variant == false %} disabled{% endif %} >
+          {% if product.selected_or_first_available_variant.available == false %}
+            SOLDE OUT
+            {% else %}
+              ADD TO CART
+          {% endif %}
+        </button>
+      </div>
+    </div>
+  {% endform %}
+    <div class="product-img">
+      <img  src="{{ product.featured_image | img_url: "master" }}" alt="">
+
+      
+    </div>
+    
+
+  </div>
+    
+  <div class="protein-info">
+     <div style="border: 4px solid {{ bgColor }}; ">
+      <h1 style=" color:{{ bgColor }}; ">{{ product.metafields.custom.hello }}</h1>
+      <h1 style=" color:{{ bgColor }}; ">PROTEIN</h1>
+     </div>
+     <div style="border: 4px solid {{ bgColor }};">
+      <h1 style=" color:{{ bgColor }}; ">1g</h1>
+      <h1 style=" color:{{ bgColor }}; ">CARBS</h1>
+     </div>
+     <div style="border: 4px solid {{ bgColor }}; ">
+      <h1 style=" color:{{ bgColor }}; ">5g</h1>
+      <h1 style=" color:{{ bgColor }}; ">CERATINE</h1>
+     </div>
+  </div>
+
+
+  <div class="product-back">
+     <img class="pro-infoimg" src="{{ myImg |  asset_url }}" alt="">
+     <img class="items-pro pro-item1"  src="{{ Img |  asset_url }}" alt="">
+      <img class="items-pro pro-item2"  src="{{ Img | asset_url }}" alt="">
+      <img class="items-pro pro-item3" src="{{ Img | asset_url }}" alt="">
+      <img class="items-pro pro-item4" src="{{ Img | asset_url }}" alt="">
+      <img class="items-pro pro-item5" src="{{ Img | asset_url }}" alt="">
+      <img class="items-pro pro-item6" src="{{ Img | asset_url }}" alt="">
+  </div>
+
+  <div class="you-may-also-like">
+    <h2>You May Also Like</h2>
+    <div class="related-products">
+      {% assign current_product = product %}
+      {% assign related_products = product.collections[0].products %}
+  
+      {% for related_product in related_products limit: 4 %}
+        {% if related_product.id != current_product.id %}
+          <a href="{{ related_product.url }}">{% render 'product', product: related_product %}</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  
+  <div class="done">
+    <p> WELL DONE !</p>
+    <div class="done-me">
+      {% render "check" %}
+      <h2>PRODUCT ADD IT TO THE CART </h2>
+    </div>
+     <a href="/cart">CHECK THE CART : <span class="count-me">5</span></a>
+  </div>
+
+</div>
+<script>
+const checkOut = document.querySelectorAll(".check-out-btn")
+const done = document.querySelectorAll(".done")
+const countMe = document.querySelectorAll(".count-me")
+
+
+
+checkOut.forEach((el) => {
+        
+el.addEventListener("click", (e) => {
+  e.preventDefault()
+  if (variantA.classList.contains("active")) {
+    selectedId = variantA.getAttribute("data-id")
+    
+  }
+  if (variantB.classList.contains("active")) {
+    selectedId = variantB.getAttribute("data-id")
+    
+  }
+  if (variantC.classList.contains("active")) {
+    selectedId = variantC.getAttribute("data-id")
+    
+  }
+  quantityValue = parseInt(quantity.value)
+
+  fetch("/cart/add", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+        id: selectedId,
+        quantity: quantityValue,
+    }),
+})
+.then((res) => {
+  res.json()
+    updateCounter();
+
+    let time = 5; // Ensure time is properly declared
+
+    countMe.forEach((ele) => {
+        const countDown = setInterval(() => {
+            time--;
+            ele.innerHTML = time;
+
+            if (time === 0) {
+                clearInterval(countDown);
+                time = 5 
+                ele.innerHTML = time;
+                console.log(time)
+            }
+        }, 1000);
+    });
+
+    done.forEach((e) => {
+        e.style.left = "5px";
+
+        setTimeout(() => { 
+            e.style.left = "-480px"; // Move back after 5 seconds
+        }, 5500);
+    });
+})
+.catch((error) => console.error("Error adding to cart:", error));
+
+
+})
+
+});
+
+
+
+
+
+</script>

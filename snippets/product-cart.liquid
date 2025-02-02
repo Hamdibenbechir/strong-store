@@ -1,0 +1,397 @@
+<form action="{{ routes.cart_url }}" method="post">
+
+        {% for item in cart.items %}
+          <div data-key="{{ item.key }}"  class="our-cart">
+            <div class="cart-img">
+              <img src="{{ item.image | img_url: "medium" }}" alt="">
+            </div>
+            <div class="cart-info">
+              <div class="title-cart">
+                
+              <a href="{{ item.url_to_remove }}">{% render "close-icon" %}</a>
+              </div>
+              <h2 class="tit">{{ item.title }}</h2>
+              <p>{{ item.vendor }}</p>
+              <div class="cart-price">
+                <h2>{{ item.price | money }}</h2>
+                
+                
+
+
+                  <div class="quantity-cart">
+                    <a class="add-cart" href="">+</a>
+                    <input class="quantity-input-cart" type="text" name="updates[]" value="{{ item.quantity }}" min="1" data-quantity-input data-quantity-item="{{ forloop.index }}">
+                    <a class="remove-cart"  href="">-</a>
+                  </div>
+
+              </div>
+              <div>
+                
+              </div>
+            </div>
+          
+          </div>
+
+        {% endfor %}
+
+</form>
+<script>
+    
+
+  const parent = document.querySelectorAll(".our-cart")
+
+  
+  const addBtn = document.querySelectorAll(".add-cart");
+const removeBtn = document.querySelectorAll(".remove-cart");
+
+addBtn.forEach((element) => {
+    element.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        const parentContainer = element.closest(".our-cart");
+        const quantityInput = parentContainer.querySelector(".quantity-input-cart");
+        let quantityValue = parseInt(quantityInput.value);
+        const itemKey = parentContainer.getAttribute("data-key");
+
+        if (isNaN(quantityValue) || quantityValue < 1) {
+            quantityValue = 1; // Default to 1 if invalid value
+        }
+
+        const newQuantity = quantityValue + 1; // Increment quantity
+        quantityInput.value = newQuantity; // Update input field immediately for UX feedback
+
+        // Update Shopify cart via AJAX
+        fetch("/cart/change.js", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: itemKey,
+                quantity: newQuantity,
+            }),
+        })
+        .then((response) => response.json())
+        .then((cart) => {
+            console.log("Cart updated:", cart);
+           Subtotal(cart.items_subtotal_price)    
+            updateCounter()
+        })
+        .catch((error) => {
+            console.error("Error updating cart:", error);
+        });
+    });
+});
+
+// Similar logic for removing an item
+removeBtn.forEach((element) => {
+    element.addEventListener("click", (e) => {
+        e.preventDefault();
+
+        const parentContainer = element.closest(".our-cart");
+        const quantityInput = parentContainer.querySelector(".quantity-input-cart");
+        let quantityValue = parseInt(quantityInput.value);
+        const itemKey = parentContainer.getAttribute("data-key");
+
+        if (isNaN(quantityValue) || quantityValue <= 1) {
+            quantityValue = 1; // Prevent negative or zero quantity
+        }
+
+        const newQuantity = quantityValue - 1;
+        if (newQuantity < 1) {
+            // Optionally handle removal of the item if quantity becomes 0
+            return;
+        }
+
+        quantityInput.value = newQuantity;
+
+        fetch("/cart/change.js", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: itemKey,
+                quantity: newQuantity,
+            }),
+        })
+        .then((response) => response.json())
+        .then((cart) => {
+            console.log("Cart updated:", cart);
+            Subtotal(cart.items_subtotal_price)    
+            updateCounter()
+        })
+        .catch((error) => {
+            console.error("Error updating cart:", error);
+        });
+    });
+});
+
+
+
+  // addBtn.forEach(element => {
+  //   element.addEventListener("click", (e) => {
+  //       e.preventDefault();
+        
+  //       const parentContainer = element.closest(".our-cart");
+  //       const quantityInput = parentContainer.querySelector(".quantity-input-cart");
+  //       let quantityValue = parseInt(quantityInput.value);
+  //       const itemKey = parentContainer.getAttribute("data-key")
+  //       const hello = quantityInput.getAttribute("data-quantity-item")
+  //       console.log(hello)
+  //       if (isNaN(quantityValue) || quantityValue < 1) {
+  //           quantityInput.value = 1;
+  //       } else {
+  //         quantityInput.value = quantityValue + 1;
+           
+  //         fetch("/cart/change.js", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           id: itemKey,
+  //           quantity: quantityValue
+  //         })
+  //       }).then((response) =>{
+  //          console.log(response.json())
+  //         console.log(response.item_count)
+  //       }  )
+  //       }
+
+        
+        
+
+  
+  
+  //   })
+  //   })
+
+
+  //   removeBtn.forEach(element => {
+
+  //   element.addEventListener("click", (e) => {
+  //        e.preventDefault()
+  //        const parentContainer = element.closest(".our-cart")
+  //        const quantityInput = parentContainer.querySelector(".quantity-input-cart");
+  //          let =  quantityValue = parseInt(quantityInput.value)
+  //        if (isNaN(quantityValue) || quantityInput.value < 1 || quantityInput.value == 1) {
+           
+  //        quantityInput.value = 1;
+  //       }else{
+  //          quantityInput.value = quantityValue - 1
+           
+  //      }
+  // })
+
+  //   });
+
+
+    
+    // parent.forEach(element => {
+    //   const parentContainer = element.closest(".our-cart")
+    
+    // });
+    
+
+</script>
+
+<style>
+  .our-cart{
+    background-color:#fff;
+    width: 600px;
+    height: 220px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: 3px solid #FF4C01;
+    border-radius: 20px;
+  }
+  .cart-info{
+    display: flex;
+    justify-content: center;
+    
+    flex-direction: column;
+    gap: 10px;
+  
+    max-width: 350px;
+  }
+  .title-cart{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    max-width: 350px;
+  }
+  .cart-info h2{
+    color: #FF4C01;
+  }
+  .cart-img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: auto;
+
+  }
+  .cart-img img{
+    width: 180px;
+  }
+
+  .cart-price{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+  }
+  .quantity-cart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    
+  }
+  .quantity-cart input{
+     border: none;
+     width: 20px;
+     font-size: 25px;
+}
+.quantity-cart input::-webkit-outer-spin-button,
+.quantity-cart input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  display: flex;
+}
+
+.quantity-cart a{
+   color: #FF4C01;
+   text-decoration: none;
+   font-size: 25px;
+}
+
+.remove-cart{
+  font-size: 40px !important;
+  margin-bottom: 11px;
+}
+
+@media screen and (max-width:1250px){
+  .our-cart{
+    
+    width: 450px;
+    height: 200px;
+  
+  }
+
+  .tit{
+    font-size: 20px;
+  }
+
+  .cart-img img{
+    width: 150px;
+  }
+
+
+    }
+
+    @media screen and (max-width:450px){
+  .our-cart{
+    
+    width: 400px;
+    height: 180px;
+  
+  }
+
+  .tit{
+    font-size: 18px;
+  }
+
+  .cart-img img{
+    width: 120px;
+  }
+  .cart-price{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .cart-price h2{
+    font-size: 20px;
+  }
+  .quantity-cart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    
+  }
+  .quantity-cart input{
+     border: none;
+     width: 30px;
+     font-size: 20px;
+     text-align: center;
+}
+.quantity-cart a{
+   color: #FF4C01;
+   text-decoration: none;
+   font-size: 15px;
+}
+
+
+.remove-cart{
+  font-size: 25px !important;
+  margin-bottom: 5px;
+
+    }
+
+      }
+
+      
+    @media screen and (max-width:400px){
+  .our-cart{
+    
+    width: 350px;
+    height: 180px;
+    gap: 0px;
+  
+  }
+
+  .tit{
+    font-size: 15px;
+  }
+
+  .cart-img img{
+    width: 100px;
+  }
+  .cart-price{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .cart-price h2{
+    font-size: 20px;
+  }
+  .quantity-cart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    
+  }
+
+.quantity-cart a{
+   color: #FF4C01;
+   text-decoration: none;
+   font-size: 15px;
+}
+
+
+.remove-cart{
+  font-size: 25px !important;
+  margin-bottom: 5px;
+
+    }
+
+      }
+</style>
