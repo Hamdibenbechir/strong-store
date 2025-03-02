@@ -18,6 +18,7 @@
   height: 850px;
   background-color: #E53935;
   position: relative;
+  overflow: hidden;
   
 }
 
@@ -448,7 +449,9 @@ width: 90px;
 }
 
 }
-
+.break{
+  overflow: hidden;
+}
 
 
 .wrapper{
@@ -1026,6 +1029,7 @@ width: 90px;
   flex-direction: column;
   gap: 80px;
   position: relative;
+  overflow: hidden;
   
   
 }

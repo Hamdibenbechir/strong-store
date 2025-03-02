@@ -18,6 +18,45 @@
 
 <script>
 
+
+var prevScrollpos = window.pageYOffset;
+
+window.onscroll = function() {
+    var currentScrollPos = window.pageYOffset;
+      if (prevScrollpos > currentScrollPos) {
+        
+      const header = document.querySelectorAll(".header")
+      header.forEach(el => {
+      
+          el.classList.add("scroll")
+        
+
+      
+    });
+
+      } else {
+        const header = document.querySelectorAll(".header")
+        header.forEach(el => {
+      
+          el.classList.remove("scroll")
+        
+
+      
+    });
+
+    }
+
+    if ( window.pageYOffset === 0) {
+      const header = document.querySelectorAll(".header")
+        header.forEach(el => {
+      
+          el.classList.remove("scroll")
+          });
+    }
+    prevScrollpos = currentScrollPos;
+
+}
+
 function updateCounter() {
   
 
@@ -30,19 +69,7 @@ updateCounter()
 
 
 
-document.addEventListener("scroll", (e) => {
-  const header = document.querySelectorAll(".header")
-  header.forEach(el => {
-    if (window.scrollY > 0) {
-      el.classList.add("scroll")
-    }else{
-      el.classList.remove("scroll")
-    }
 
-  
-});
-
-})
 
 
 

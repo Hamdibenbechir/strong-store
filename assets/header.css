@@ -12,8 +12,9 @@
   top: 0;
   left: 0;
   right: 0;
-  transition: all 0.4s;
+  transition: all 0.5s;
   border-radius: 0px 0px 40px 40px;
+  
 }
 .header{
   display: flex;
@@ -21,7 +22,8 @@
   align-items: center;
   height: 110px;
   background-color: transparent;
-  transition: all 0.4s;
+  transition: all 0.5s;
+  max-width: 100%;
 }
 .header a{
   text-decoration: none;
