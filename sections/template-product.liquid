@@ -46,6 +46,33 @@
     <div class="product-description">
       <p>{{ product.description }}</p>
     </div>
+     <div class="shopBy">
+      <h1>Shop By Flavors:</h1>
+      <div class="flavore-wrapper">
+      
+        <a class=" {%  if request.path contains "/products/chocolate-spread"   %} onpath  {% endif %} " href="/products/chocolate-spread">
+          <img src="{{ "choco.png"  |  asset_url }}" alt="">
+        </a>
+       <a class=" {%  if request.path contains "/products/dates-milk"   %} onpath  {% endif %} "  href="/products/dates-milk">
+        <img src="{{ "dates.png"  |  asset_url }}" alt="">
+       </a>
+      
+        <a class="{%  if product.title == "CREAM COOKIE PROTEIN"   %} onpath  {% endif %}"  href="/products/evolve®-whey-ice-cream-cookie">
+        <img src="{{ "orio.png"  |  asset_url }}" alt="">
+       </a>
+         <a class=" {%  if request.path contains "/products/strawberry-tart"   %} onpath  {% endif %} "  href="/products/strawberry-tart">
+        <img src="{{ "straw.png"  |  asset_url }}" alt="">
+       </a>
+          <a class=" {%  if request.path contains "/products/whey-sobia"   %} onpath  {% endif %} "  href="/products/whey-sobia">
+        <img src="{{ "sobia.png"  |  asset_url }}" alt="">
+       </a>
+        <a class=" {%  if request.path contains "/products/caramelized-biscuits"   %} onpath  {% endif %} "  href="/products/caramelized-biscuits">
+        <img src="{{ "caramel.png"  |  asset_url }}" alt="">
+       </a>
+      </div>
+      
+    
+     </div>
       <div class="variant">
            {% for option in product.options_with_values %}
               <h1>{{ option.name }} :</h1>
@@ -141,12 +168,214 @@
     </div>
      <a href="/cart">CHECK THE CART : <span class="count-me">5</span></a>
   </div>
+   <div class="fixed-cart">
+      <div class="b-title">
+        <img src="{{ product.featured_image | img_url: "200px" }}" alt="">
+         <h1>{{ product.title }}</h1>
+      </div>
+      <h1 id="product-pric">{{ product.first_available_variant.price | money }}</h1>
+      <div class="var">
 
+
+
+              {% for option in product.options_with_values %}
+                <h1>{{ option.name }} :</h1>
+            {% endfor %}
+
+            {% for variant in product.variants %}
+                    
+              <a class="vab" href=""
+              {% if variant == product.selected_or_first_available_variant %}
+                selected
+              {% endif %}
+              data-price="{{ variant.price | money }}"
+              data-id="{{ variant.id }}"
+              >
+                {{ variant.title }}</a>
+            
+          {% endfor %}
+
+      </div>
+
+
+      <div class="checks">
+            <button class="check-out-bn" type="submit" {% if product.selected_or_first_available_variant == false %} disabled{% endif %} >
+              {% if product.selected_or_first_available_variant.available == false %}
+                SOLDE OUT
+                {% else %}
+                  ADD TO CART
+              {% endif %}
+            </button>
+      </div>
+
+
+
+      
+   </div>
 </div>
 <script>
+
+  const fixedCard = document.querySelector(".fixed-cart")
+ 
+  
+
+window.onscroll = function() {
+    let currentScrollPoa = window.pageYOffset;
+
+    console.log(currentScrollPoa)
+      if (currentScrollPoa > 400 ) {
+         fixedCard.style.opacity = "1"
+         fixedCard.style.visibility = "visible"
+    
+
+      } else{
+        
+        
+
+      fixedCard.style.opacity = "0"
+         fixedCard.style.visibility = "hidden"
+    
+
+    }
+
+    
+
+}
+
+
+
+
+
+
+
 const checkOut = document.querySelectorAll(".check-out-btn")
+const checkt = document.querySelectorAll(".check-out-bn")
 const done = document.querySelectorAll(".done")
 const countMe = document.querySelectorAll(".count-me")
+const varianta = document.querySelectorAll(".vab")[0];
+const variantb = document.querySelectorAll(".vab")[1];
+const variantc = document.querySelectorAll(".vab")[2];
+let pric = document.getElementById("product-pric")
+varianta.classList.add("active");
+
+
+
+
+variantb.addEventListener("click", (e) => {
+  e.preventDefault()
+
+  if ( varianta.classList.contains("active") || variantc.classList.contains("active")) {
+    varianta.classList.remove("active");
+    variantc.classList.remove("active");
+  }
+  
+  variantb.classList.add("active");
+   selectedPrice = variantb.getAttribute("data-price")
+   pric.innerText = selectedPrice
+
+
+})
+
+variantc.addEventListener("click", (e) => {
+  e.preventDefault()
+
+  if ( varianta.classList.contains("active") || variantb.classList.contains("active")) {
+    varianta.classList.remove("active");
+    variantb.classList.remove("active");
+  }
+  
+  variantc.classList.add("active");
+  selectedPrice = variantc.getAttribute("data-price")
+   pric.innerText = selectedPrice
+
+})
+
+varianta.addEventListener("click", (e) => {
+  e.preventDefault()
+
+  if ( variantc.classList.contains("active") || variantb.classList.contains("active")) {
+    variantc.classList.remove("active");
+    variantb.classList.remove("active");
+  }
+  
+  varianta.classList.add("active");
+  selectedPrice = varianta.getAttribute("data-price")
+  pric.innerText = selectedPrice
+
+})
+
+
+checkt.forEach((el) => {
+        
+el.addEventListener("click", (e) => {
+  e.preventDefault()
+  if (varianta.classList.contains("active")) {
+    selectedId = varianta.getAttribute("data-id")
+     
+  }
+  if (variantb.classList.contains("active")) {
+    selectedId = variantb.getAttribute("data-id")
+    
+  }
+  if (variantc.classList.contains("active")) {
+    selectedId = variantc.getAttribute("data-id")
+    
+  }
+  
+
+
+  fetch("/cart/add", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+        id: selectedId,
+        quantity: 1,
+    }),
+})
+.then((res) => {
+  res.json()
+    updateCounter();
+
+    let time = 5; // Ensure time is properly declared
+
+    countMe.forEach((ele) => {
+        const countDown = setInterval(() => {
+            time--;
+            ele.innerHTML = time;
+
+            if (time === 0) {
+                clearInterval(countDown);
+                time = 5 
+                ele.innerHTML = time;
+                console.log(time)
+            }
+        }, 1000);
+    });
+
+    done.forEach((e) => {
+        e.style.left = "5px";
+
+        setTimeout(() => { 
+            e.style.left = "-480px"; // Move back after 5 seconds
+        }, 5500);
+    });
+})
+.catch((error) => console.error("Error adding to cart:", error));
+
+
+})
+
+});
+
+
+
+
+
+
+
+
 
 
 

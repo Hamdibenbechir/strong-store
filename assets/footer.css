@@ -9,21 +9,18 @@
   
 }
   
-  .footer{
-    width: 100%;
-    background-color: #D4A8FF;
-    
-  }
-.wrapper{
-  
-  
+.footer{
   width: 100%;
+  background-color: #D4A8FF;
+  position: relative;
   
+}
+.wrapper{
+  width: 100%;
   margin-inline: auto;
   position: relative;
   height: 150px;
   overflow: hidden;
-  
 }
 
 @keyframes left {
@@ -40,7 +37,7 @@
   width: 100px;
   height: 70px;
   border-radius: 16px;
-   color:#eee6e6;
+  color:#eee6e6;
   width: 600px;
   font-size: 35px;
   position: absolute;

@@ -3,42 +3,65 @@
   <div class="faq-container">
     <div class="faq">
         <div class="faq-question" onclick="toggleAnswer(this)">
-          What is HTML?
+          What is WStrong?
           <span>
           {% render 'arrow-icon' %}
           </span>
           </div>
       
         <div class="faq-answer">
-          HTML stands for HyperText Markup Language and is used to structure web pages.
-        
-          </div>
+          WStrong is your premier destination for high-quality fitness equipment and accessories. We specialize in providing professional-grade workout gear to help you achieve your fitness goals, whether you're a beginner or an experienced athlete.
+        </div>
     </div>
     <div class="faq">
-        <div class="faq-question" onclick="toggleAnswer(this)">What is CSS?
+        <div class="faq-question" onclick="toggleAnswer(this)">
+          What payment methods do you accept?
           <span>
             {% render 'arrow-icon' %}
           </span>
         </div>
-        <div class="faq-answer">CSS stands for Cascading Style Sheets and is used to style web pages.</div>
+        <div class="faq-answer">
+          We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and bank transfers. All payments are processed securely through our payment partners to ensure your transaction is safe and protected.
+        </div>
     </div>
     <div class="faq">
-        <div class="faq-question" onclick="toggleAnswer(this)">What is JavaScript?
-          <span >
+        <div class="faq-question" onclick="toggleAnswer(this)">
+          What is your shipping policy?
+          <span>
             {% render 'arrow-icon' %}
           </span>
         </div>
-        <div class="faq-answer">JavaScript is a programming language that makes web pages interactive.</div>
+        <div class="faq-answer">
+          We offer free shipping on orders over $100. Standard shipping takes 3-5 business days, while express shipping is available for next-day delivery. All orders are carefully packaged to ensure your equipment arrives in perfect condition.
+        </div>
+    </div>
+    <div class="faq">
+        <div class="faq-question" onclick="toggleAnswer(this)">
+          What is your return policy?
+          <span>
+            {% render 'arrow-icon' %}
+          </span>
+        </div>
+        <div class="faq-answer">
+          We offer a 30-day money-back guarantee on all unused items in their original packaging. If you're not satisfied with your purchase, simply contact our customer service team to initiate a return. We'll provide a prepaid shipping label and process your refund within 5-7 business days.
+        </div>
+    </div>
+    <div class="faq">
+        <div class="faq-question" onclick="toggleAnswer(this)">
+          Do you offer warranty on your products?
+          <span>
+            {% render 'arrow-icon' %}
+          </span>
+        </div>
+        <div class="faq-answer">
+          Yes, all our products come with a comprehensive warranty. Most equipment includes a 1-year warranty against manufacturing defects, while premium items may have extended warranty coverage. Please check individual product pages for specific warranty details.
+        </div>
     </div>
   </div>
 </div>  
 
 <style>
-  .faqs{
-    background-color: #fff6e7;
-    width: 100%;
-    height: 700px;
-  }
+
   .cont{
     width: 100%;
    display: flex;
@@ -52,23 +75,18 @@
   .cont h1{
     color: #FF4C01;
     font-size: 70px;
+    margin-top: 20px;
   }
    .faq-container {
             width: 800px;
             margin: auto;
-            background: white;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin-top: 30px;
-            border: 1px solid red;
-          
             
         }
         .faq {
             border-bottom: 1px solid #ddd;
-            padding: 10px 0;
-            
+            padding: 15px 0;
         }
         .faq:last-child {
             border-bottom: none;
@@ -78,13 +96,31 @@
             font-weight: bold;
             font-size: 35px;
             color: #FF4C01;
-
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+        .faq-question span {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .faq-question.active span {
+            transform: rotate(180deg);
         }
         .faq-answer {
-            display: none;
-            padding-top: 5px;
-            font-size: 30px;
-
+            padding: 0 10px;
+            font-size: 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        .faq-answer.active {
+            max-height: 500px;
+            opacity: 1;
+            transform: translateY(0);
+            padding: 10px;
         }
 
         
@@ -102,7 +138,17 @@
           
             
         }
-  
+        .faq-question {
+          
+            font-size: 20px;
+        
+        }
+
+         .faq-answer {
+          
+            font-size: 15px;
+            
+        }
 
 }
 
@@ -118,19 +164,7 @@
           
             
         }
-          .faq-question {
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 25px;
-            color: #FF4C01;
-
-        }
-        .faq-answer {
-            display: none;
-            padding-top: 5px;
-            font-size: 20px;
-
-        }
+      
 
 }
 </style>
@@ -138,6 +172,28 @@
 <script>
    function toggleAnswer(element) {
             const answer = element.nextElementSibling;
-            answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+            const isCurrentlyActive = element.classList.contains('active');
+
+            // If the clicked FAQ is currently active, just close it
+            if (isCurrentlyActive) {
+                element.classList.remove('active');
+                answer.classList.remove('active');
+                return;
+            }
+
+            // Close all other FAQs first
+            const allAnswers = document.querySelectorAll('.faq-answer');
+            const allQuestions = document.querySelectorAll('.faq-question');
+            
+            allAnswers.forEach(answer => {
+                answer.classList.remove('active');
+            });
+            allQuestions.forEach(question => {
+                question.classList.remove('active');
+            });
+
+            // Open the clicked FAQ
+            element.classList.add('active');
+            answer.classList.add('active');
         }
 </script>

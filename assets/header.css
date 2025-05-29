@@ -9,12 +9,18 @@
   background-color: #D4A8FF  !important;
   position: fixed;
   z-index: 10000000;
-  top: 0;
+  top: 10px;
   left: 0;
   right: 0;
   transition: all 0.5s;
-  border-radius: 0px 0px 40px 40px;
+  border-radius: 50px 50px 50px 50px;
+  height: 90px !important;
+
   
+}
+.scroll .logo h1{
+  rotate: 0deg !important;
+  margin-top: 0px !important;
 }
 .header{
   display: flex;
@@ -96,6 +102,13 @@
     font-size: 20px;
     
   }
-
+.scroll{
+  height: 60px !important;
 }
+}
+
+
+
+
+
 
